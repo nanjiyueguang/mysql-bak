@@ -37,9 +37,9 @@ if [[ ${ALL_DATABASES} == "" ]]; then
 	echo "Missing DB_NAME env variable"
 	exit 1
 elif [ "${log_bin_on}" == 'ON' ];then
-	mysql $DSN -Ne "show databases;"| grep -Ev "information_schema|mysql|performance_schema|sys" | xargs mysqldump $DSN --databases --compress --flush-logs --flush-privileges --master-data=2 --routines --single-transaction --dump-date --log-error=/mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/mysqldump.log.err |gzip > /mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/${DB_HOST}.consistent.dump.gz 
+	mysql $DSN -Ne "show databases;"| grep -Ev "information_schema|performance_schema|sys" | xargs mysqldump $DSN --databases --compress --flush-logs --flush-privileges --master-data=2 --routines --single-transaction --dump-date --log-error=/mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/mysqldump.log.err |gzip > /mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/${DB_HOST}.consistent.dump.gz 
 elif [ "${log_bin_on}" == 'OFF' ];then
-    mysql $DSN -Ne "show databases;"| grep -Ev "information_schema|mysql|performance_schema|sys" | xargs mysqldump ${DSN} --databases --compress --skip-lock-tables --routines --dump-date --log-error=/mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/mysqldump.log.err |gzip > /mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/${DB_HOST}.dump.gz    
+    mysql $DSN -Ne "show databases;"| grep -Ev "information_schema|performance_schema|sys" | xargs mysqldump ${DSN} --databases --compress --skip-lock-tables --routines --dump-date --log-error=/mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/mysqldump.log.err |gzip > /mysqldump/${DB_HOST}/$(date +'%Y%m%d%H')/${DB_HOST}.dump.gz    
 else
     echo "log_bin error"
     exit 1
