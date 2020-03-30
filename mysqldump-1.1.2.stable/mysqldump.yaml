@@ -31,7 +31,7 @@ spec:
         spec:
           containers:
           - name: mysqldump
-            image: nanjiyueguang/mysqldump:1.1.2
+            image: harbor.cloudminds.com/mysql/mysqldump:1.1.2
             env:
               - name: ALL_DATABASES
                 valueFrom:
